@@ -4,14 +4,14 @@ import "./globals.css";
 
 const display = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "600"],
   variable: "--font-display",
   display: "swap",
 });
 
 const body = Jost({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
   variable: "--font-body",
   display: "swap",
 });
@@ -56,6 +56,7 @@ export default function RootLayout({
     <html lang="fr" className="scroll-smooth">
       <head>
         <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
+        <link rel="preload" as="image" href="/logo.png" />
       </head>
       <body
         className={`${display.variable} ${body.variable} bg-slate-950 font-body text-zinc-300 antialiased`}

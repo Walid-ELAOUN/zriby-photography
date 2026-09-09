@@ -460,7 +460,7 @@ function Hero() {
           {HERO_IMAGES.map((img, i) => (
             <div
               key={img.alt}
-              className={`group relative overflow-hidden rounded-2xl border border-slate-800/60 shadow-xl ${img.span}`}
+              className={`group relative overflow-hidden rounded-2xl border border-slate-800/60 shadow-xl ${img.span === "col-span-2 row-span-2" ? "aspect-square" : img.span === "col-span-2 row-span-1" ? "aspect-video" : "aspect-square"}`}
             >
               <Image
                 src={img.src}
@@ -600,7 +600,7 @@ function Portfolio() {
         {visible.map((p) => (
           <div
             key={p.cat + p.title}
-            className="fade-up group relative mb-4 overflow-hidden break-inside-avoid rounded-2xl border border-slate-800/60"
+            className="fade-up group relative mb-4 aspect-[3/4] overflow-hidden break-inside-avoid rounded-2xl border border-slate-800/60"
           >
             <Image
               src={p.img}

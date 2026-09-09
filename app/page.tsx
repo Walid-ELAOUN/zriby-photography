@@ -288,7 +288,7 @@ function Header() {
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-500"
+            className="inline-flex items-center gap-2 rounded-full bg-emerald-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-600"
           >
             <WhatsAppIcon className="h-4 w-4" />
             WhatsApp
@@ -329,7 +329,7 @@ function Header() {
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 px-5 py-3 text-sm font-semibold text-white"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-700 px-5 py-3 text-sm font-semibold text-white"
               >
                 <WhatsAppIcon className="h-4 w-4" />
                 Discuter sur WhatsApp
@@ -425,7 +425,7 @@ function Hero() {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-emerald-600 px-8 py-4 text-sm font-bold text-white transition hover:bg-emerald-500 sm:w-auto"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-emerald-700 px-8 py-4 text-sm font-bold text-white transition hover:bg-emerald-600 sm:w-auto"
             >
               <WhatsAppIcon className="h-5 w-5" />
               Discuter sur WhatsApp
@@ -786,7 +786,7 @@ function Contact() {
   return (
     <section id="contact" className="relative overflow-hidden py-20">
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-emerald-500/5 blur-2xl" />
+        <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-emerald-700/5 blur-2xl" />
         <div className="absolute left-0 top-20 h-80 w-80 rounded-full bg-gold/5 blur-2xl" />
       </div>
 
@@ -885,8 +885,8 @@ function Contact() {
               </p>
 
               {sent ? (
-                <div className="mt-8 rounded-2xl border border-emerald-500/40 bg-emerald-500/10 p-8 text-center">
-                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-600/20 text-emerald-500">
+                <div className="mt-8 rounded-2xl border border-emerald-700/40 bg-emerald-700/10 p-8 text-center">
+                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-700/20 text-emerald-500">
                     <CheckCircle className="h-9 w-9" />
                   </div>
                   <h4 className="font-display text-2xl font-semibold text-white">
@@ -1061,7 +1061,7 @@ function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="WhatsApp"
-                className="rounded-full border border-slate-800 p-2.5 text-zinc-300 transition hover:border-emerald-400 hover:text-emerald-400"
+                className="rounded-full border border-slate-800 p-2.5 text-zinc-300 transition hover:border-emerald-500 hover:text-emerald-500"
               >
                 <WhatsAppIcon className="h-5 w-5" />
               </a>
@@ -1133,7 +1133,7 @@ function FloatingWhatsApp() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Contacter sur WhatsApp"
-      className="group fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-600 text-white shadow-2xl shadow-emerald-600/40 transition hover:scale-110 hover:bg-emerald-500"
+      className="group fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-700 text-white shadow-2xl shadow-emerald-700/40 transition hover:scale-110 hover:bg-emerald-600"
     >
       <WhatsAppIcon className="relative h-7 w-7" />
     </a>

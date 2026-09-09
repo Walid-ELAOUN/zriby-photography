@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import {
   Camera,
@@ -391,9 +392,9 @@ function Hero() {
     >
       {/* gradient d'ambiance */}
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute -top-32 left-1/2 h-[500px] w-[900px] -translate-x-1/2 rounded-full bg-gold/10 blur-[120px]" />
-        <div className="absolute right-0 top-40 h-72 w-72 rounded-full bg-rose-500/10 blur-[100px]" />
-        <div className="absolute bottom-0 left-0 h-72 w-72 rounded-full bg-amber-300/10 blur-[100px]" />
+        <div className="absolute -top-32 left-1/2 h-[500px] w-[900px] -translate-x-1/2 rounded-full bg-gold/10 blur-3xl" />
+        <div className="absolute right-0 top-40 h-72 w-72 rounded-full bg-rose-500/10 blur-2xl" />
+        <div className="absolute bottom-0 left-0 h-72 w-72 rounded-full bg-amber-300/10 blur-2xl" />
       </div>
 
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-2 lg:px-8">
@@ -456,16 +457,18 @@ function Hero() {
 
         {/* Mosaïque */}
         <div className="fade-up grid grid-cols-2 gap-3 sm:grid-cols-3">
-          {HERO_IMAGES.map((img) => (
+          {HERO_IMAGES.map((img, i) => (
             <div
               key={img.alt}
               className={`group relative overflow-hidden rounded-2xl border border-slate-800/60 shadow-xl ${img.span}`}
             >
-              <img
+              <Image
                 src={img.src}
                 alt={img.alt}
-                className="h-full w-full object-cover transition duration-700 group-hover:scale-110"
-                loading="lazy"
+                fill
+                sizes="(max-width: 640px) 100vw, 50vw"
+                priority={i < 2}
+                className="object-cover transition duration-700 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
               <div className="absolute bottom-3 left-3 text-xs font-medium text-white/90">
@@ -490,7 +493,7 @@ function Stats() {
         {STATS.map((s) => (
           <div
             key={s.label}
-            className="fade-up gold-border rounded-2xl bg-slate-900/50 p-6 text-center backdrop-blur transition hover:-translate-y-1"
+            className="fade-up gold-border rounded-2xl bg-slate-900/50 p-6 text-center transition hover:-translate-y-1"
           >
             <div className="font-display text-3xl font-semibold text-gradient-gold sm:text-4xl">
               {s.value}
@@ -528,7 +531,7 @@ function Services() {
         {SERVICES.map((s) => (
           <div
             key={s.title}
-            className="fade-up group relative overflow-hidden rounded-3xl border border-slate-800/60 bg-slate-900/40 p-8 backdrop-blur transition hover:border-gold/40 hover:shadow-glow"
+            className="fade-up group relative overflow-hidden rounded-3xl border border-slate-800/60 bg-slate-900/40 p-8 transition hover:border-gold/40 hover:shadow-glow"
           >
             <div className="absolute -right-8 -top-8 h-32 w-32 rounded-full bg-gold/10 blur-2xl transition group-hover:bg-gold/20" />
             <div className="mb-5 inline-flex rounded-2xl bg-gradient-to-br from-gold/20 to-slate-800 p-4 text-gold ring-1 ring-gold/30">
@@ -599,11 +602,12 @@ function Portfolio() {
             key={p.cat + p.title}
             className="fade-up group relative mb-4 overflow-hidden break-inside-avoid rounded-2xl border border-slate-800/60"
           >
-            <img
+            <Image
               src={p.img}
               alt={p.title}
-              className="w-full object-cover transition duration-700 group-hover:scale-110"
-              loading="lazy"
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="object-cover transition duration-700 group-hover:scale-110"
             />
             <div className="absolute inset-0 flex items-end bg-gradient-to-t from-slate-950/85 via-slate-950/10 to-transparent p-5 opacity-0 transition group-hover:opacity-100">
               <div>
@@ -628,24 +632,26 @@ function Photobook() {
   return (
     <section id="photobook" className="relative overflow-hidden py-20">
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-0 h-72 w-[700px] -translate-x-1/2 rounded-full bg-gold/5 blur-[100px]" />
+        <div className="absolute left-1/2 top-0 h-72 w-[700px] -translate-x-1/2 rounded-full bg-gold/5 blur-2xl" />
       </div>
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-2 lg:px-8">
         <div className="grid grid-cols-2 gap-3">
-          <div className="overflow-hidden rounded-2xl border border-slate-800/60">
-            <img
-              src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=600&auto=format&fit=crop"
+          <div className="relative aspect-square overflow-hidden rounded-2xl border border-slate-800/60">
+            <Image
+              src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=400&auto=format&fit=crop"
               alt="Photobook"
-              className="h-full w-full object-cover transition duration-700 hover:scale-110"
-              loading="lazy"
+              fill
+              sizes="(max-width: 640px) 50vw, 25vw"
+              className="object-cover transition duration-700 hover:scale-110"
             />
           </div>
-          <div className="overflow-hidden rounded-2xl border border-slate-800/60">
-            <img
-              src="https://images.unsplash.com/photo-1478146059778-26028b07395a?q=80&w=600&auto=format&fit=crop"
+          <div className="relative aspect-square overflow-hidden rounded-2xl border border-slate-800/60">
+            <Image
+              src="https://images.unsplash.com/photo-1478146059778-26028b07395a?q=80&w=400&auto=format&fit=crop"
               alt="Vidéo mariage"
-              className="h-full w-full object-cover transition duration-700 hover:scale-110"
-              loading="lazy"
+              fill
+              sizes="(max-width: 640px) 50vw, 25vw"
+              className="object-cover transition duration-700 hover:scale-110"
             />
           </div>
         </div>
@@ -725,7 +731,7 @@ function Reviews() {
         {REVIEWS.map((r) => (
           <div
             key={r.name}
-            className="fade-up relative flex flex-col rounded-3xl border border-slate-800/60 bg-slate-900/40 p-7 backdrop-blur transition hover:border-gold/40"
+            className="fade-up relative flex flex-col rounded-3xl border border-slate-800/60 bg-slate-900/40 p-7 transition hover:border-gold/40"
           >
             <Quote className="absolute right-6 top-6 h-10 w-10 text-gold/15" />
             <div className="mb-3 flex gap-0.5 text-gold">
@@ -790,8 +796,8 @@ function Contact() {
   return (
     <section id="contact" className="relative overflow-hidden py-20">
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-emerald-500/5 blur-[100px]" />
-        <div className="absolute left-0 top-20 h-80 w-80 rounded-full bg-gold/5 blur-[100px]" />
+        <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-emerald-500/5 blur-2xl" />
+        <div className="absolute left-0 top-20 h-80 w-80 rounded-full bg-gold/5 blur-2xl" />
       </div>
 
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
@@ -812,7 +818,7 @@ function Contact() {
           {/* Info + Carte */}
           <div className="space-y-6 lg:col-span-2">
             {/* Infos */}
-            <div className="rounded-3xl border border-slate-800/60 bg-slate-900/40 p-7 backdrop-blur">
+            <div className="rounded-3xl border border-slate-800/60 bg-slate-900/40 p-7">
               <h3 className="font-display text-xl font-semibold text-white">
                 Informations &amp; Horaires
               </h3>
@@ -878,7 +884,7 @@ function Contact() {
           <div className="lg:col-span-3">
             <form
               onSubmit={handleSubmit}
-              className="rounded-3xl border border-slate-800/60 bg-slate-900/40 p-8 backdrop-blur lg:p-10"
+              className="rounded-3xl border border-slate-800/60 bg-slate-900/40 p-8 lg:p-10"
             >
               <h3 className="font-display text-2xl font-semibold text-white">
                 Formulaire de Réservation
@@ -1137,7 +1143,6 @@ function FloatingWhatsApp() {
       aria-label="Contacter sur WhatsApp"
       className="group fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500 text-white shadow-2xl shadow-emerald-500/40 transition hover:scale-110 hover:bg-emerald-400"
     >
-      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-50" />
       <WhatsAppIcon className="relative h-7 w-7" />
     </a>
   );

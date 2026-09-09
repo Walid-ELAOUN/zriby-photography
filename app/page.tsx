@@ -165,9 +165,8 @@ function useRevealOnScroll() {
       target.classList.add("animate-fade-up");
     };
 
-    const targets = Array.from(el.querySelectorAll(".fade-up"));
     if (!("IntersectionObserver" in window)) {
-      targets.forEach(reveal);
+      el.querySelectorAll(".fade-up").forEach(reveal);
       return;
     }
 
@@ -182,19 +181,12 @@ function useRevealOnScroll() {
       },
       { threshold: 0.05, rootMargin: "0px 0px -5% 0px" }
     );
+
+    const targets = el.querySelectorAll(".fade-up");
     targets.forEach((t) => io.observe(t));
 
-    // Filet de sécurité : révèle tout après un court délai pour ne jamais
-    // laisser du contenu masqué si un élément n'est pas observé correctement.
-    const t = setTimeout(() => {
-      el.querySelectorAll(".fade-up:not(.animate-fade-up)").forEach(reveal);
-    }, 2500);
-
     el.classList.add("reveal-ready");
-    return () => {
-      io.disconnect();
-      clearTimeout(t);
-    };
+    return () => io.disconnect();
   }, []);
   return ref;
 }
@@ -202,16 +194,14 @@ function useRevealOnScroll() {
 function Logo({ className = "" }: { className?: string }) {
   return (
     <a href="#accueil" className={`group flex items-center gap-3 ${className}`}>
-      <img
+      <Image
         src="/logo.png"
         alt="Zriby Photography Logo"
+        width={80}
+        height={80}
+        sizes="44px"
+        priority
         className="h-11 w-11 rounded-full object-cover ring-1 ring-gold/40 shadow-glow group-hover:ring-gold transition"
-        onError={(e) => {
-          const target = e.currentTarget;
-          target.style.display = "none";
-          const fallback = target.nextElementSibling as HTMLElement | null;
-          if (fallback) fallback.style.display = "flex";
-        }}
       />
       <span
         className="hidden h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-gold/30 to-slate-800 text-lg font-semibold text-gold ring-1 ring-gold/40"
@@ -298,7 +288,7 @@ function Header() {
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-400"
+            className="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-500"
           >
             <WhatsAppIcon className="h-4 w-4" />
             WhatsApp
@@ -339,7 +329,7 @@ function Header() {
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-500 px-5 py-3 text-sm font-semibold text-white"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 px-5 py-3 text-sm font-semibold text-white"
               >
                 <WhatsAppIcon className="h-4 w-4" />
                 Discuter sur WhatsApp
@@ -435,16 +425,16 @@ function Hero() {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-emerald-500 px-8 py-4 text-sm font-bold text-white transition hover:bg-emerald-400 sm:w-auto"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-emerald-600 px-8 py-4 text-sm font-bold text-white transition hover:bg-emerald-500 sm:w-auto"
             >
               <WhatsAppIcon className="h-5 w-5" />
               Discuter sur WhatsApp
             </a>
           </div>
 
-          <div className="fade-up mt-8 flex flex-wrap items-center justify-center gap-4 text-xs text-zinc-500 lg:justify-start">
+          <div className="fade-up mt-8 flex flex-wrap items-center justify-center gap-4 text-xs text-zinc-400 lg:justify-start">
             <span className="inline-flex items-center gap-1.5">
-              <CheckCircle className="h-4 w-4 text-emerald-400" /> Ouvert 7j/7
+              <CheckCircle className="h-4 w-4 text-emerald-500" /> Ouvert 7j/7
             </span>
             <span className="inline-flex items-center gap-1.5">
               <Sparkles className="h-4 w-4 text-gold" /> Photobook HD
@@ -466,7 +456,7 @@ function Hero() {
                 src={img.src}
                 alt={img.alt}
                 fill
-                sizes="(max-width: 640px) 100vw, 50vw"
+                sizes={img.span === "col-span-2 row-span-2" ? "(max-width: 640px) 100vw, 50vw" : img.span === "col-span-2 row-span-1" ? "(max-width: 640px) 100vw, 50vw" : "(max-width: 640px) 50vw, 25vw"}
                 priority={i < 2}
                 className="object-cover transition duration-700 group-hover:scale-110"
               />
@@ -499,7 +489,7 @@ function Stats() {
               {s.value}
             </div>
             <div className="mt-2 text-sm font-semibold text-white">{s.label}</div>
-            <div className="mt-1 text-xs text-zinc-500">{s.sub}</div>
+            <div className="mt-1 text-xs text-zinc-400">{s.sub}</div>
           </div>
         ))}
       </div>
@@ -748,8 +738,8 @@ function Reviews() {
               </div>
               <div>
                 <div className="text-sm font-semibold text-white">{r.name}</div>
-                <div className="text-xs text-zinc-500">
-                  <span className="text-emerald-400">✓</span> Avis Google Vérifié
+                <div className="text-xs text-zinc-400">
+                  <span className="text-emerald-500">✓</span> Avis Google Vérifié
                 </div>
               </div>
             </div>
@@ -827,21 +817,21 @@ function Contact() {
                   <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-gold" />
                   <div>
                     <div className="font-semibold text-white">Ariana, Grand Tunis</div>
-                    <div className="text-zinc-500">Code Plus : V55J+RR Ariana</div>
+                    <div className="text-zinc-400">Code Plus : V55J+RR Ariana</div>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <Clock className="mt-0.5 h-5 w-5 shrink-0 text-gold" />
                   <div>
                     <div className="font-semibold text-white">Ouvert 7j/7</div>
-                    <div className="text-zinc-500">Lundi – Dimanche : 09:00 – 20:30</div>
+                    <div className="text-zinc-400">Lundi – Dimanche : 09:00 – 20:30</div>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <Phone className="mt-0.5 h-5 w-5 shrink-0 text-gold" />
                   <div>
                     <div className="font-semibold text-white">{PHONE_DISPLAY}</div>
-                    <div className="text-zinc-500">Téléphone &amp; WhatsApp</div>
+                    <div className="text-zinc-400">Téléphone &amp; WhatsApp</div>
                   </div>
                 </li>
               </ul>
@@ -896,7 +886,7 @@ function Contact() {
 
               {sent ? (
                 <div className="mt-8 rounded-2xl border border-emerald-500/40 bg-emerald-500/10 p-8 text-center">
-                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400">
+                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-600/20 text-emerald-500">
                     <CheckCircle className="h-9 w-9" />
                   </div>
                   <h4 className="font-display text-2xl font-semibold text-white">
@@ -947,10 +937,11 @@ function Contact() {
                     />
                   </div>
                   <div>
-                    <label className="mb-1.5 block text-sm font-medium text-zinc-300">
+                    <label htmlFor="event" className="mb-1.5 block text-sm font-medium text-zinc-300">
                       Type d&apos;événement
                     </label>
                     <select
+                      id="event"
                       name="event"
                       value={form.event}
                       onChange={handleChange}
@@ -968,10 +959,11 @@ function Contact() {
                     </select>
                   </div>
                   <div>
-                    <label className="mb-1.5 block text-sm font-medium text-zinc-300">
+                    <label htmlFor="date" className="mb-1.5 block text-sm font-medium text-zinc-300">
                       Date prévue
                     </label>
                     <input
+                      id="date"
                       name="date"
                       value={form.date}
                       onChange={handleChange}
@@ -1007,13 +999,13 @@ function Contact() {
                         </>
                       )}
                     </button>
-                    <p className="mt-3 text-center text-xs text-zinc-500">
+                    <p className="mt-3 text-center text-xs text-zinc-400">
                       Préférez le direct ?{" "}
                       <a
                         href={WHATSAPP_URL}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-semibold text-emerald-400 hover:underline"
+                        className="font-semibold text-emerald-500 hover:underline"
                       >
                         Discutons sur WhatsApp
                       </a>
@@ -1118,7 +1110,7 @@ function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-slate-800/60 pt-6 text-center text-xs text-zinc-500 sm:flex-row sm:text-left">
+        <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-slate-800/60 pt-6 text-center text-xs text-zinc-400 sm:flex-row sm:text-left">
           <p>© {new Date().getFullYear()} Zriby Photography · Ariana, Tunis 🇹🇳</p>
           <p>
             Note <span className="text-gold">4.8/5</span> ★ · Studio ouvert 7j/7 ·
@@ -1141,7 +1133,7 @@ function FloatingWhatsApp() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Contacter sur WhatsApp"
-      className="group fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500 text-white shadow-2xl shadow-emerald-500/40 transition hover:scale-110 hover:bg-emerald-400"
+      className="group fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-600 text-white shadow-2xl shadow-emerald-600/40 transition hover:scale-110 hover:bg-emerald-500"
     >
       <WhatsAppIcon className="relative h-7 w-7" />
     </a>
